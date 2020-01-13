@@ -4,11 +4,19 @@ import { Slate, Editable, withReact } from 'slate-react'
 
 const ReadOnlyExample = () => {
   const [value, setValue] = useState(initialValue)
+  const [readOnly, setReadOnly] = useState(true)
   const editor = useMemo(() => withReact(createEditor()), [])
   return (
-    <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-      <Editable readOnly placeholder="Enter some plain text..." />
-    </Slate>
+    <>
+      <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+        <Editable readOnly={readOnly} placeholder="Enter some plain text..." />
+      </Slate>
+      <hr />
+      <p>
+        State: { readOnly ? 'Read-Only' : 'Editable' }
+        {' '} (<a onClick={ () => setReadOnly(!readOnly) } style={{color: 'blue', cursor: 'pointer'}}>Toggle</a>)
+      </p>
+    </>
   )
 }
 
